@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="iletisim.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div id="app" class="container" style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+            <form id="form" action="iletisim.php" method="POST" @submit.prevent="submitForm">
+                <div class="row">
+                    <div class="col-25">
+                        <label for="fname">İsim</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" id="fname" name="firstname" v-model="formData.firstname" placeholder="Adınız">
+                        <span v-if="errors.firstname">{{ errors.firstname }}</span>
+                        <span v-if="jsErrors.firstname">{{ jsErrors.firstname }}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="lname">Soyad</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" id="lname" name="lastname" v-model="formData.lastname" placeholder="Soyadınız">
+                        <span v-if="errors.lastname">{{ errors.lastname }}</span>
+                        <span v-if="jsErrors.lastname">{{ jsErrors.lastname }}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Cinsiyet</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="radio" name="cinsiyet" value="Erkek" v-model="formData.cinsiyet"><label>Erkek</label>
+                        <input type="radio" name="cinsiyet" value="Kadın" v-model="formData.cinsiyet"><label>Kadın</label>
+                        <span v-if="errors.cinsiyet">{{ errors.cinsiyet }}</span>
+                        <span v-if="jsErrors.cinsiyet">{{ jsErrors.cinsiyet }}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Sevdiğiniz Sporlar</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="checkbox" name="spor[]" value="Basketbol" v-model="formData.spor"><label>Basketbol</label>
+                        <input type="checkbox" name="spor[]" value="Futbol" v-model="formData.spor"><label>Futbol</label>
+                        <input type="checkbox" name="spor[]" value="Hentbol" v-model="formData.spor"><label>Hentbol</label>
+                        <span v-if="errors.spor">{{ errors.spor }}</span>
+                        <span v-if="jsErrors.spor">{{ jsErrors.spor }}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="email">E-mail:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="email" name="email" v-model="formData.email" placeholder="Email adresiniz:">
+                        <span v-if="errors.email">{{ errors.email }}</span>
+                        <span v-if="jsErrors.email">{{ jsErrors.email }}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="country">Yaşadığınız Şehir</label>
+                    </div>
+                    <div class="col-75">
+                        <select id="country" name="sehir" v-model="formData.sehir">
+                            <option value="İstanbul">İstanbul</option>
+                            <option value="Ankara">Ankara</option>
+                            <option value="İzmir">İzmir</option>
+                            <option value="Antalya">Antalya</option>
+                            <option value="Bolu">Bolu</option>
+                            <option value="Bursa">Bursa</option>
+                            <option value="Düzce">Düzce</option>
+                            <option value="Erzincan">Erzincan</option>
+                            <option value="Erzurum">Erzurum</option>
+                            <option value="Eskişehir">Eskişehir</option>
+                            <option value="Isparta">Isparta</option>
+                            <option value="Karabük">Karabük</option>
+                            <option value="Kastamonu">Kastamonu</option>
+                            <option value="Kayseri">Kayseri</option>
+                            <option value="Kırşehir">Kırşehir</option>
+                            <option value="Kilis">Kilis</option>
+                            <option value="Kocaeli">Kocaeli</option>
+                            <option value="Konya">Konya</option>
+                            <option value="Manisa">Manisa</option>
+                            <option value="Sakarya">Sakarya</option>
+                            <option value="Samsun">Samsun</option>
+                            <option value="Sivas">Sivas</option>
+                            <option value="Şanlıurfa">Şanlıurfa</option>
+                            <option value="Zonguldak">Zonguldak</option>
+                        </select>
+                        <span v-if="errors.sehir">{{ errors.sehir }}</span>
+                        <span v-if="jsErrors.sehir">{{ jsErrors.sehir }}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="subject">Önerileriniz</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea id="subject" name="bilgi" v-model="formData.bilgi" placeholder="Önerileriniz" style="height:100px"></textarea>
+                        <span v-if="errors.bilgi">{{ errors.bilgi }}</span>
+                        <span v-if="jsErrors.bilgi">{{ jsErrors.bilgi }}</span>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="dogum">Doğum Tarihi:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="datetime-local" name="dogum" v-model="formData.dogum" id="dogum">
+                        <span v-if="errors.dogum">{{ errors.dogum }}</span>
+                        <span v-if="jsErrors.dogum">{{ jsErrors.dogum }}</span>
+                    </div>
+                </div>
+                <br>
+                <div class="row" style="display: flex; justify-content: space-between;">
+                    <input type="reset" value="Sıfırla" @click="clearForm" style="margin-right: 10px;">
+                    <input type="button" value="JavaScript ile Gönder" @click="javascriptKontrol" style="margin-right: 10px;">
+                    <input type="button" value="Vue.js ile Gönder" @click="vueSubmit">
+                </div>
+            </form>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    formData: {
+                        firstname: '',
+                        lastname: '',
+                        cinsiyet: '',
+                        spor: [],
+                        email: '',
+                        sehir: '',
+                        bilgi: '',
+                        dogum: ''
+                    },
+                    errors: {},
+                    jsErrors: {}
+                },
+                methods: {
+                    clearForm() {
+                        this.formData = {
+                            firstname: '',
+                            lastname: '',
+                            cinsiyet: '',
+                            spor: [],
+                            email: '',
+                            sehir: '',
+                            bilgi: '',
+                            dogum: ''
+                        };
+                        this.errors = {};
+                        this.jsErrors = {};
+                    },
+                    validateForm() {
+                        this.errors = {};
+                        if (!this.formData.firstname) {
+                            this.errors.firstname = 'İsim boş bırakılamaz.';
+                        }
+                        if (!this.formData.lastname) {
+                            this.errors.lastname = 'Soyad boş bırakılamaz.';
+                        }
+                        if (!this.formData.cinsiyet) {
+                            this.errors.cinsiyet = 'Cinsiyet boş bırakılamaz.';
+                        }
+                        if (!this.formData.spor.length) {
+                            this.errors.spor = 'En az bir spor seçmelisiniz.';
+                        }
+                        if (!this.formData.email) {
+                            this.errors.email = 'Email boş bırakılamaz.';
+                        } else if (!this.validEmail(this.formData.email)) {
+                            this.errors.email = 'Geçerli bir email adresi giriniz.';
+                        }
+                        if (!this.formData.sehir) {
+                            this.errors.sehir = 'Şehir seçmelisiniz.';
+                        }
+                        if (!this.formData.bilgi) {
+                            this.errors.bilgi = 'Öneriler boş bırakılamaz.';
+                        }
+                        if (!this.formData.dogum) {
+                            this.errors.dogum = 'Doğum tarihi boş bırakılamaz.';
+                        }
+                        return Object.keys(this.errors).length === 0;
+                    },
+                    validEmail(email) {
+                        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\.,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,})$/i;
+                        return re.test(email);
+                    },
+                    vueSubmit() {
+                        if (this.validateForm()) {
+                            // Vue.js ile form doğrulandıysa formu gönder
+                            document.getElementById('form').submit();
+                        }
+                    },
+                    javascriptKontrol() {
+                        this.jsErrors = {};
+                        var isim = this.formData.firstname;
+                        var soyisim = this.formData.lastname;
+                        var email = this.formData.email;
+                        var cinsiyet = this.formData.cinsiyet;
+
+                        if (isim === "") {
+                            this.jsErrors.firstname = "İsim boş bırakılamaz.";
+                        }
+                        if (soyisim === "") {
+                            this.jsErrors.lastname = "Soyisim boş bırakılamaz.";
+                        }
+                        if (email === "") {
+                            this.jsErrors.email = "Email boş bırakılamaz.";
+                        }
+                        if (!cinsiyet) {
+                            this.jsErrors.cinsiyet = "Lütfen cinsiyet alanını doldurunuz.";
+                        }
+
+                        if (Object.keys(this.jsErrors).length === 0) {
+                            // JavaScript ile form doğrulandıysa formu gönder
+                            document.getElementById('form').submit();
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
